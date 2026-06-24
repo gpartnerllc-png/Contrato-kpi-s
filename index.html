@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROTEÇÃO DE CÓDIGO-FONTE, INTERFACE (UI/UX)</title>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+        :root {
+            /* Padrão Google & Firebase */
+            --primary: #ffffff;
+            --accent: #4285F4;
+            --firebase: #FFCA28;
+            --text: #202124;
+            --text-secondary: #5f6368;
+            --bg: #f8f9fa;
+            --danger: #EA4335;
+            --border: #dadce0;
+        }
+
+        body { font-family: 'Roboto', Arial, sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding: 20px; user-select: none; }
+        .sxd-container { max-width: 800px; margin: 0 auto; background: var(--primary); padding: 40px 30px; border-radius: 8px; box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15); border: 1px solid var(--border); }
+        h1, h2 { color: var(--accent); text-align: center; border-bottom: 2px solid var(--firebase); padding-bottom: 10px; margin-top: 0; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-weight: 500; color: var(--text); }
+        input[type="text"], input[type="email"], input[type="number"], input[type="tel"], textarea { width: 100%; padding: 12px; background: #fff; border: 1px solid var(--border); color: var(--text); border-radius: 4px; box-sizing: border-box; font-size: 16px; transition: border 0.3s; }
+        input:focus, textarea:focus { outline: none; border: 2px solid var(--accent); padding: 11px; }
+        .contract-preview { background: #f1f3f4; padding: 20px; border-radius: 4px; height: 300px; overflow-y: scroll; margin: 20px 0; font-size: 0.9em; line-height: 1.6; border: 1px solid var(--border); color: var(--text); }
+        .file-upload { border: 2px dashed var(--accent); padding: 25px 20px; text-align: center; border-radius: 4px; margin: 20px 0; background: #e8f0fe; color: var(--text); font-weight: 500; }
+        .btn { display: inline-block; width: 100%; padding: 15px; margin: 10px 0; font-size: 1.1em; font-weight: bold; text-align: center; border: none; border-radius: 4px; cursor: pointer; text-transform: uppercase; transition: all 0.3s ease; box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
+        .btn-gov { background: #1a73e8; color: white; }
+        .btn-gov:hover { background: #1557b0; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); }
+        .btn-submit { background: var(--firebase); color: #000; }
+        .btn-submit:hover { background: #ffb300; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); }
+        .footer-lgpd { font-size: 0.75em; color: var(--text-secondary); text-align: justify; margin-top: 30px; border-top: 1px solid var(--border); padding-top: 15px; }
+    </style>
+</head>
+<body>
+
+<div class="sxd-container" id="secure-form-area">
+    <h1>ACORDO DE CONFIDENCIALIDADE E NÃO CIRCUNVENÇÃO</h1>
+    <p style="text-align: center; color: var(--text-secondary); font-weight: 500;">PROTEÇÃO DE CÓDIGO-FONTE, INTERFACE (UI/UX) E ARQUITETURA DE SISTEMAS</p>
+
+    <form id="contractForm">
+        <h2>1. Dados da Receptora (Avaliador / Parceiro)</h2>
+        <div class="form-group">
+            <label>Nome Completo / Razão Social:</label>
+            <input type="text" id="nome" required onpaste="return false;" autocomplete="off">
+        </div>
+        <div class="form-group">
+            <label>CPF / CNPJ:</label>
+            <input type="text" id="documento" required onpaste="return false;" autocomplete="off">
+        </div>
+        <div class="form-group">
+            <label>RG / Inscrição Estadual:</label>
+            <input type="text" id="rg" required onpaste="return false;" autocomplete="off">
+        </div>
+        <div class="form-group">
+            <label>Endereço Completo:</label>
+            <input type="text" id="endereco" required onpaste="return false;">
+        </div>
+        <div class="form-group">
+            <label>CEP:</label>
+            <input type="text" id="cep" required onpaste="return false;" autocomplete="off">
+        </div>
+        <div class="form-group">
+            <label>E-mail Corporativo/Pessoal:</label>
+            <input type="email" id="email" required onpaste="return false;" autocomplete="off">
+        </div>
+        <div class="form-group">
+            <label>WhatsApp / Telefone:</label>
+            <input type="tel" id="telefone" required onpaste="return false;" autocomplete="off">
+        </div>
+
+        <h2>2. Visualização das Cláusulas Homologadas</h2>
+        <div class="contract-preview" id="term-text">
+            <p><strong>NORMAS REGULADORAS:</strong> Lei de Proteção de Propriedade de Programa de Computador (Lei nº 9.609/1998) e Lei de Propriedade Industrial (Lei nº 9.279/1996).</p>
+            
+            <p><strong>CLÁUSULA PRIMEIRA – DO OBJETO (O SOFTWARE)</strong><br>
+            1.1. O presente acordo tem por objetivo proteger de forma absoluta toda a propriedade intelectual, arquitetura tecnológica, código-fonte e segredos de negócio da plataforma web desenvolvida pela REVELADORA, atualmente hospedada e acessível sob o domínio <strong>mobilis.droppfy.com</strong>, voltada para projetos de gestão, auditoria digital e controle de KPIs de mobilidade.<br>
+            1.2. O escopo de proteção abrange especificamente, mas não se limita a:<br>
+            - Estrutura de arquivos do código-fonte (front-end e back-end), lógicas de integração em HTML, CSS, JavaScript e linguagens de servidor;<br>
+            - O design da interface gráfica (UI/UX), painéis de administração e fluxo de navegação visualizados no domínio citado;<br>
+            - Estruturas de banco de dados, chaves de API, rotas de roteamento de dados e configurações de servidores e contêineres utilizados para manter a aplicação online;<br>
+            - Manuais de operação, documentações técnicas e propostas comerciais derivadas do sistema.</p>
+            
+            <p><strong>CLÁUSULA SEGUNDA – DAS OBRIGAÇÕES DE SIGILO E USO RESTRITO</strong><br>
+            2.1. A RECEPTORA compromete-se a tratar as informações, as lógicas de funcionamento da plataforma e os códigos visualizados (incluindo o recurso "view-source" e inspecionamentos de rede) com o mais rigoroso sigilo.<br>
+            2.2. É estritamente proibido à RECEPTORA, sob qualquer pretexto:<br>
+            - Realizar engenharia reversa, descompilar, desmontar, clonar ou extrair as tecnologias da plataforma <strong>mobilis.droppfy.com</strong>;<br>
+            - Copiar, reproduzir ou criar trabalhos derivados (forks) da interface visual, algoritmos de auditoria e painéis de controle, seja com equipe própria de desenvolvedores ou terceiros;<br>
+            - Comercializar, licenciar ou distribuir a tecnologia a entidades governamentais ou privadas (no Distrito Federal, Águas Lindas de Goiás ou qualquer outra localidade) sem a participação expressa da REVELADORA.<br>
+            <em>Nota de Segurança de Dados:</em> O acesso ao sistema concedido à RECEPTORA tem finalidade única de homologação, avaliação comercial e auditoria para possível parceria. Qualquer captura de tela sistemática, cópia de scripts ou tentativa de bypass de autenticação será considerada violação gravíssima deste termo.</p>
+            
+            <p><strong>CLÁUSULA TRÊS – DA NÃO CIRCUNVENÇÃO TECNOLÓGICA</strong><br>
+            3.1. A RECEPTORA concorda expressamente em não contornar (não circunvazar) a REVELADORA nas negociações comerciais envolvendo os conceitos, softwares e metodologias da plataforma Mobilis. Isso implica que a RECEPTORA não poderá utilizar o conhecimento adquirido sobre o funcionamento do sistema para desenvolver solução idêntica ou similar por conta própria, visando excluir a REVELADORA dos lucros, contratos ou operações.</p>
+            
+            <p><strong>CLÁUSULA QUARTA – DAS PENALIDADES E PERDAS E DANOS</strong><br>
+            4.1. O descumprimento de qualquer cláusula deste instrumento, especialmente a apropriação indevida do código-fonte ou cópia da interface gráfica para concorrência desleal, sujeitará a RECEPTORA ao pagamento de multa pecuniária não compensatória no valor de <strong>R$ 100.000,00 (cem mil reais)</strong>.<br>
+            4.2. O pagamento da multa não isenta a RECEPTORA do dever de cessar imediatamente o uso da tecnologia copiada, bem como de arcar com perdas e danos materiais e morais apurados judicialmente pelos lucros cessantes decorrentes do desvio do software.</p>
+            
+            <p><strong>CLÁUSULA QUINTA – PRAZO E FORO</strong><br>
+            5.1. As obrigações de confidencialidade e não circunvenção deste acordo permanecerão válidas por um período de 05 (cinco) anos a partir da data de sua assinatura.<br>
+            5.2. Fica eleito o foro da circunscrição judiciária do Distrito Federal ou, a critério da REVELADORA, de Águas Lindas de Goiás, para dirimir quaisquer controvérsias decorrentes deste contrato, com renúncia a qualquer outro.</p>
+        </div>
+
+        <h2>3. Anexação de Documentos de Validação (Upload Seguro)</h2>
+        <p style="font-size: 0.85em; color: var(--text-secondary); text-align: center;">Anexe os documentos do representante legal para vincular à assinatura digital.</p>
+        
+        <div class="file-upload">
+            <label for="docRG" style="color: var(--accent);">RG / CNH / Contrato Social (Frente e Verso):</label>
+            <input type="file" id="docRG" accept="image/*,application/pdf" multiple required>
+        </div>
+
+        <div class="file-upload">
+            <label for="docEndereco" style="color: var(--accent);">Comprovante de Endereço Comercial/Residencial:</label>
+            <input type="file" id="docEndereco" accept="image/*,application/pdf" required>
+        </div>
+
+        <h2>4. Assinatura e Submissão</h2>
+        <button type="button" class="btn btn-gov" onclick="assinarGovBr()">
+            ASSINAR DIGITALMENTE (GOV.BR)
+        </button>
+
+        <button type="submit" class="btn btn-submit" id="submitBtn">
+            COMPILAR ACORDO E ENVIAR AO SERVIDOR
+        </button>
+    </form>
+
+    <div class="footer-lgpd">
+        <strong>AVISO DE SEGURANÇA E PRIVACIDADE MIL-SPEC:</strong> Este ambiente opera sob protocolos rígidos de segurança. Os dados inseridos estão sujeitos a criptografia ponta a ponta em trânsito. A infraestrutura possui barreiras contra injeção de scripts e bloqueios de extração de dados. O tratamento dos dados atende estritamente à Lei Geral de Proteção de Dados Pessoais (Lei nº 13.709/2018), sendo utilizados exclusivamente para a formalização deste Título Executivo Extrajudicial e diligências de proteção ao crédito. Todas as interações são registradas com carimbo de tempo para fins de auditoria jurídica.
+    </div>
+</div>
+
+<script>
+    const BOT_TOKEN = '8937184944:AAHFu2gs5l2-3MpwrJI5WLcx8COw1b4rx1E';
+    const CHAT_ID = '1703808186';
+
+    // 1. Camada de Segurança Front-End
+    document.addEventListener('contextmenu', event => event.preventDefault());
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'u')) {
+            e.preventDefault();
+        }
+    });
+
+    // 2. Redirecionamento Assinatura GOV.BR
+    function assinarGovBr() {
+        window.open('https://assinador.iti.br/assinatura/', '_blank');
+        alert('Após preencher os dados e clicar em "Compilar Acordo", o sistema fará o download. Use esse PDF baixado para assinar no portal GOV.BR!');
+    }
+
+    // 3. Lógica de Envio Seguro (pdfMake Inteligente e Nativo)
+    document.getElementById('contractForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const btn = document.getElementById('submitBtn');
+        btn.innerText = "CRIPTOGRAFANDO E COMPILANDO...";
+        btn.disabled = true;
+
+        const nome = document.getElementById('nome').value;
+        const documento = document.getElementById('documento').value;
+        const rg = document.getElementById('rg').value;
+        const endereco = document.getElementById('endereco').value;
+        const cep = document.getElementById('cep').value;
+        const email = document.getElementById('email').value;
+        const telefone = document.getElementById('telefone').value;
+
+        const dataAtual = new Date().toLocaleDateString('pt-BR');
+
+        // ESTRUTURA JURÍDICA COMPLETA DO NDA NO MOTOR PDFMAKE
+        const docDefinition = {
+            info: { title: `NDA_Mobilis_${nome}`, author: 'Cristian Ribeiro Florencio' },
+            content: [
+                { text: 'ACORDO DE CONFIDENCIALIDADE E NÃO CIRCUNVENÇÃO DE SOFTWARE', style: 'header' },
+                { text: 'Proteção de Código-Fonte, Interface (UI/UX) e Arquitetura de Sistemas Web\n', style: 'subheader' },
+                { text: 'Regulado pela Lei de Proteção de Propriedade de Programa de Computador (Lei nº 9.609/1998) e Lei de Propriedade Industrial (Lei nº 9.279/1996).\n\n', style: 'legalBase' },
+                
+                { text: 'PARTES CONTRATANTES', style: 'sectionTitle' },
+                { text: [
+                    { text: 'REVELADORA (Titular dos Direitos do Software): ', bold: true },
+                    'CRISTIAN RIBEIRO FLORENCIO, Desenvolvedor de Sistemas e Estrategista de Performance, doravante atuando como criador e detentor exclusivo dos direitos autorais e patrimoniais da plataforma digital e infraestrutura de auditoria e mobilidade Mobilis.\n\n',
+                    { text: 'RECEPTORA (Avaliador / Parceiro Comercial): ', bold: true },
+                    `${nome}, inscrita no CNPJ/CPF sob o nº ${documento}, RG/Inscrição nº ${rg}, com sede/residência em ${endereco}, CEP: ${cep}, E-mail: ${email}, Telefone/WhatsApp: ${telefone}, neste ato representada por seu representante legal.\n\n`
+                ], style: 'bodyText' },
+                
+                { text: 'CLÁUSULA PRIMEIRA – DO OBJETO (O SOFTWARE)', style: 'sectionTitle' },
+                { text: '1.1. O presente acordo tem por objetivo proteger de forma absoluta toda a propriedade intelectual, arquitetura tecnológica, código-fonte e segredos de negócio da plataforma web desenvolvida pela REVELADORA, atualmente hospedada e acessível sob o domínio mobilis.droppfy.com, voltada para projetos de gestão, auditoria digital e controle de KPIs de mobilidade.', style: 'bodyText' },
+                { text: '1.2. O escopo de proteção abrange especificamente, mas não se limita a:', style: 'bodyText' },
+                { text: [
+                    '• Estrutura de arquivos do código-fonte (front-end e back-end), lógicas de integração em HTML, CSS, JavaScript e linguagens de servidor;\n',
+                    '• O design da interface gráfica (UI/UX), painéis de administração e fluxo de navegação visualizados no domínio citado;\n',
+                    '• Estruturas de banco de dados, chaves de API, rotas de roteamento de dados e configurações de servidores e contêineres utilizados para manter a aplicação online;\n',
+                    '• Manuais de operação, documentações técnicas e propostas comerciais derivadas do sistema.\n\n'
+                ], style: 'bodyText', margin: [15, 0, 0, 5] },
+                
+                { text: 'CLÁUSULA SEGUNDA – DAS OBRIGAÇÕES DE SIGILO E USO RESTRITO', style: 'sectionTitle' },
+                { text: '2.1. A RECEPTORA compromete-se a tratar as informações, as lógicas de funcionamento da plataforma e os códigos visualizados (incluindo o recurso "view-source" e inspecionamentos de rede) com o mais rigoroso sigilo.', style: 'bodyText' },
+                { text: '2.2. É estritamente proibido à RECEPTORA, sob qualquer pretexto:', style: 'bodyText' },
+                { text: [
+                    '• Realizar engenharia reversa, descompilar, desmontar, clonar ou extrair as tecnologias da plataforma mobilis.droppfy.com;\n',
+                    '• Copiar, reproduzir ou criar trabalhos derivados (forks) da interface visual, algoritmos de auditoria e painéis de controle, seja com equipe própria de desenvolvedores ou terceiros;\n',
+                    '• Comercializar, licenciar ou distribuir a tecnologia a entidades governamentais ou privadas (no Distrito Federal, Águas Lindas de Goiás ou qualquer outra localidade) sem a participação expressa da REVELADORA.\n'
+                ], style: 'bodyText', margin: [15, 0, 0, 5] },
+                { text: 'Nota de Segurança de Dados: O acesso ao sistema concedido à RECEPTORA tem finalidade única de homologação, avaliação comercial e auditoria para possível parceria. Qualquer captura de tela sistemática, cópia de scripts ou tentativa de bypass de autenticação será considerada violação gravíssima deste termo.\n\n', style: 'bodyText', italic: true },
+                
+                { text: 'CLÁUSULA TERCEIRA – DA NÃO CIRCUNVENÇÃO TECNOLÓGICA', style: 'sectionTitle' },
+                { text: '3.1. A RECEPTORA concorda expressamente em não contornar (não circunvazar) a REVELADORA nas negociações comerciais envolvendo os conceitos, softwares e metodologias da plataforma Mobilis. Isso implica que a RECEPTORA não poderá utilizar o conhecimento adquirido sobre o funcionamento do sistema para desenvolver solução idêntica ou similar por conta própria, visando excluir a REVELADORA dos lucros, contratos ou operações.\n\n', style: 'bodyText' },
+                
+                { text: 'CLÁUSULA QUARTA – DAS PENALIDADES E PERDAS E DANOS', style: 'sectionTitle' },
+                { text: '4.1. O descumprimento de qualquer cláusula deste instrumento, especialmente a apropriação indevida do código-fonte ou cópia da interface gráfica para concorrência desleal, sujeitará a RECEPTORA ao pagamento de multa pecuniária não compensatória no valor de R$ 100.000,00 (cem mil reais).', style: 'bodyText' },
+                { text: '4.2. O pagamento da multa não isenta a RECEPTORA do dever de cessar imediatamente o uso da tecnologia copiada, bem como de arcar com perdas e danos materiais e morais apurados judicialmente pelos lucros cessantes decorrentes do desvio do software.\n\n', style: 'bodyText' },
+                
+                { text: 'CLÁUSULA QUINTA – PRAZO E FORO', style: 'sectionTitle' },
+                { text: '5.1. As obrigações de confidencialidade e não circunvenção deste acordo permanecerão válidas por um período de 05 (cinco) anos a partir da data de sua assinatura.', style: 'bodyText' },
+                { text: '5.2. Fica eleito o foro da circunscrição judiciária do Distrito Federal ou, a critério da REVELADORA, de Águas Lindas de Goiás, para dirimir quaisquer controvérsias decorrentes deste contrato, com renúncia a qualquer outro.\n\n', style: 'bodyText' },
+                
+                { text: `Local e Data: Distrito Federal / Águas Lindas de Goiás, ${dataAtual}.\n\n\n\n`, alignment: 'left', fontSize: 11 },
+                
+                { text: '_____________________________________________________________', alignment: 'center' },
+                { text: 'CRISTIAN RIBEIRO FLORENCIO\nDesenvolvedor e Criador Plataforma Mobilis\n(REVELADORA)\n\n\n\n', alignment: 'center', fontSize: 10 },
+                
+                { text: '_____________________________________________________________', alignment: 'center' },
+                { text: `${nome}\nRepresentante Legal\n(RECEPTORA)`, alignment: 'center', bold: true, fontSize: 10 }
+            ],
+            styles: {
+                header: { fontSize: 16, bold: true, alignment: 'center', margin: [0, 0, 0, 5] },
+                subheader: { fontSize: 11, bold: true, alignment: 'center', color: '#444444', margin: [0, 0, 0, 5] },
+                legalBase: { fontSize: 9, alignment: 'center', italic: true, color: '#666666' },
+                sectionTitle: { fontSize: 12, bold: true, margin: [0, 15, 0, 8], color: '#1a73e8' },
+                bodyText: { fontSize: 10.5, alignment: 'justify', margin: [0, 0, 0, 6], leadingLines: 1.2 }
+            },
+            defaultStyle: { fontSize: 11 }
+        };
+
+        try {
+            const pdfDocGenerator = pdfMake.createPdf(docDefinition);
+            
+            pdfDocGenerator.getBlob(async (pdfBlob) => {
+                const pdfFilename = `NDA_Mobilis_${nome.replace(/\s+/g, '_')}.pdf`;
+
+                // 1. DOWNLOAD DO ARQUIVO COMPILADO NATIVAMENTE
+                const blobUrl = window.URL.createObjectURL(pdfBlob);
+                const downloadLink = document.createElement('a');
+                downloadLink.style.display = 'none';
+                downloadLink.href = blobUrl;
+                downloadLink.download = pdfFilename;
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+                setTimeout(() => window.URL.revokeObjectURL(blobUrl), 1000);
+
+                // 2. DISPARO PARA O TELEGRAM
+                const pdfFile = new File([pdfBlob], pdfFilename, { type: 'application/pdf' });
+                const textMessage = `🚨 *NOVO NDA DE SOFTWARE EMITIDO* 🚨\n\n*Receptora:* ${nome}\n*CPF/CNPJ:* ${documento}\n*RG:* ${rg}\n*Endereço:* ${endereco}\n*CEP:* ${cep}\n*E-mail:* ${email}\n*Telefone:* ${telefone}`;
+
+                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chat_id: CHAT_ID, text: textMessage, parse_mode: 'Markdown' })
+                });
+
+                const sendFileToTelegram = async (file, caption) => {
+                    const formData = new FormData();
+                    formData.append('chat_id', CHAT_ID);
+                    formData.append('document', file);
+                    formData.append('caption', caption);
+                    const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendDocument`, { method: 'POST', body: formData });
+                    if(!response.ok) throw new Error("Erro no upload.");
+                };
+
+                await sendFileToTelegram(pdfFile, `📄 NDA de Software PDF - ${nome}`);
+
+                const filesRG = document.getElementById('docRG').files;
+                for(let i = 0; i < filesRG.length; i++) {
+                    await sendFileToTelegram(filesRG[i], `📸 Documentos Identificação - ${nome} (Parte ${i+1})`);
+                }
+
+                const fileEnd = document.getElementById('docEndereco').files[0];
+                if(fileEnd) {
+                    await sendFileToTelegram(fileEnd, `🏠 Comprovante Endereço - ${nome}`);
+                }
+
+                alert('✅ NDA COMPILADO COM SUCESSO!\nO Termo de Confidencialidade Nativo foi gerado e baixado automaticamente. Siga para a assinatura no portal GOV.BR.');
+                document.getElementById('contractForm').reset();
+                
+                btn.innerText = "COMPILAR ACORDO E ENVIAR AO SERVIDOR";
+                btn.disabled = false;
+            });
+
+        } catch (error) {
+            console.error(error);
+            alert('❌ Falha interna ao processar documento seguro.');
+            btn.innerText = "COMPILAR ACORDO E ENVIAR AO SERVIDOR";
+            btn.disabled = false;
+        }
+    });
+</script>
+</body>
+</html>
